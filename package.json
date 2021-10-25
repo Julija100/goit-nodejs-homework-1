@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "nodemon": "^2.0.14"
+  },
+  "name": "goit-nodejs-homework-1",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon ./index.js",
+    "start": "node ./index.js"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Julija100/goit-nodejs-homework-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Julija100/goit-nodejs-homework-1/issues"
+  },
+  "homepage": "https://github.com/Julija100/goit-nodejs-homework-1#readme"
+}
