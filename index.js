@@ -1,3 +1,6 @@
-const { getCurrentDate } = require('./dateUtils')
+const { removeContact } = require("./contacts");
 
-console.log(`Get current date funtion result : ${getCurrentDate()}`);
+
+removeContact(1).then((contact) => {
+    console.log(contact);
+});

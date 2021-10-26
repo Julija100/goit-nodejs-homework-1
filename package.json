@@ -1,17 +1,16 @@
 {
   "dependencies": {
+    "crypto-randomuuid": "^1.0.0",
     "nodemon": "^2.0.14"
   },
   "name": "goit-nodejs-homework-1",
   "description": "",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon ./index.js",
     "start": "node ./index.js"
-
   },
   "repository": {
     "type": "git",
