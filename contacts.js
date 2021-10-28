@@ -1,10 +1,10 @@
 const path = require("path");
 const { readFile, writeFile } = require("fs/promises");
-const { write } = require("fs");
+const chalk = require("chalk");
+const crypto = require("crypto");
 
 const contactsPath = path.resolve(__dirname, "db/contacts.json");
 
-// TODO: задокументировать каждую функцию
 async function listContacts() {
   const fileContent = await readFile(contactsPath, "utf8");
   return JSON.parse(fileContent);
@@ -13,42 +13,43 @@ async function listContacts() {
 async function getContactById(contactId) {
   const contacts = await listContacts();
   return contacts.find((contact) => {
-    return contact.id === contactId;
+    return contact.id.toString() === contactId;
   });
 }
 
 async function removeContact(contactId) {
   const contacts = await listContacts();
   const newContacts = contacts.filter((contact) => {
-    return contact.id !== contactId;
+    return contact.id.toString() !== contactId;
   });
   await writeFile(contactsPath, JSON.stringify(newContacts));
 }
 
 async function addContact(name, email, phone) {
-    try {
-        const contacts = await listContacts();
-        const newContact = { id: crypto.randomUUID(), name, email, phone };
-        const newContactsList = [...contacts, newContact];
-        
-        const dublicateContacts = contacts.find(
-            (contact) =>
-                name.toLowerCase() === contact.name.toLowerCase() &&
-                email.toLowerCase() === contact.email.toLowerCase() &&
-                phone === contact.phone
-        );
-        if (dublicateContacts)
-            return console.log(chalk.green('This contact already exists!'));
-        
-        await writeFile(contactsPath, JSON.stringify(newContactsList));
+  try {
+    const contacts = await listContacts();
+    const newContact = { id: crypto.randomUUID(), name, email, phone };
+    const newContactsList = [...contacts, newContact];
 
-        console.log(chalk.blue(`${name} added to contact list!`));
-        return newContact;
-    } catch (error) {
-        return console.error(chalk.red(error.message));
+    const dublicateContacts = contacts.find(
+      (contact) =>
+        name.toLowerCase() === contact.name.toLowerCase() &&
+        email.toLowerCase() === contact.email.toLowerCase() &&
+        phone === contact.phone
+    );
+    if (dublicateContacts) {
+      throw new Error ("This contact already exists!");
     }
-}
+    await writeFile(contactsPath, JSON.stringify(newContactsList));
 
+    console.log(chalk.green(`${name} added to contact list!`));
+
+    return newContact;
+  } catch (error) {
+    console.error(chalk.red(error.message));
+    throw error
+  }
+}
 
 module.exports = {
   listContacts,
